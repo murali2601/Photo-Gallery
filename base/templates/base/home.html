@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<style>
+    body{
+        background: url('https://images7.alphacoders.com/131/1311860.jpeg');
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    .containers{
+      margin: 5% 10%;
+    }
+</style>
+</head>
+<body>
+  <div class="containers">
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Category
+        </button>
+        <ul class="dropdown-menu dropdown-menu-light">
+          <li><a class="dropdown-item" href="{% url 'home' %}">All</a></li>
+          <li><hr class="dropdown-divider"></li>
+            {% for i in categories %}
+          <li><a class="dropdown-item" href="{% url 'home' %}?category={{ i.name }}">{{ i.name }}</a></li>
+          {% endfor %}
+          <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="{% url 'form' %}">Add photo</a></li>
+        </ul>
+      </div>
+      <br>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for j in photo %}
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{j.image.url}}" class="card-img-top" alt="...">
+            <div class="card-body card-img-overlaytext-white">
+              <h5 class="card-title">{{ j.category.name }}</h5>
+              <p class="card-text">{{ j.description }}</p>
+             <a href="{{j.image.url}}" download><button class="btn btn-primary">Download</button></a> 
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h5 style="color: white;">Upload Your first Photo by clicking on Category and then, Add photo :)</h5>
+        {% endfor %}
+      </div>
+    </div>
+</body>
+</html>
