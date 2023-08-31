@@ -1,11 +1,15 @@
 from django.shortcuts import render,redirect
 from .models import *
+from .forms import *
 # Create your views here.
 
 
 
 def home(request):
+    categories = Category.objects.all()
     data = request.GET.get('category')
+    delete = request.GET.get('delete')
+
 
     if data != None:
         photo = Photo.objects.filter(category__name=data)
@@ -13,7 +17,7 @@ def home(request):
         photo = Photo.objects.all()
 
 
-    categories = Category.objects.all()
+
     #photo = Photo.objects.all()
     context = {'categories' : categories,'photo' : photo}
     return render(request, 'base/home.html',context)
@@ -37,6 +41,7 @@ def form(request):
 
         photo = Photo.objects.create(
             category = category,
+            title = data['title'],
             description = data['description'],
             image = img,
         )
@@ -47,3 +52,29 @@ def form(request):
     context = {'categories' : categories,'photo' : photo}
     return render(request, 'base/form.html',context)
     
+
+def delete(request,pk):
+    categories = Category.objects.get(id=pk)
+    photo = Photo.objects.get()
+
+    if request.method == 'POST':
+        categories.delete()
+        return redirect('home')
+    
+    context = {'obj': photo.title}
+
+    return render(request, 'base/delete.html',context)
+
+#------------- testing purpose only -----------------
+
+def test(request):
+    form = PhotoForm()
+
+    if request.method == 'POST':
+        form = PhotoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form' : form}
+    return render(request,'base/test.html',context)

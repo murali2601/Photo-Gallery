@@ -40,9 +40,11 @@
           <div class="card h-100">
             <img src="{{j.image.url}}" class="card-img-top" alt="...">
             <div class="card-body card-img-overlaytext-white">
+              <h3 class="card-title">{{ j.title }}</h3>
               <h5 class="card-title">{{ j.category.name }}</h5>
               <p class="card-text">{{ j.description }}</p>
              <a href="{{j.image.url}}" download><button class="btn btn-primary">Download</button></a> 
+             <a href="{% url 'delete' j.category.id %}"><button  class="btn btn-light">Delete</button></a>
             </div>
           </div>
         </div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are you want to delete?</title>
+    <style>body{
+        margin: 5% 10%;
+    }
+    </style>
+</head>
+<body>
+    <center>
+        <form action="" method="post">
+            {% csrf_token %}
+            <h2>Are Your sure, you want ot delete "{{obj}}"?</h2>
+            <a href="{% url 'home' %}">Go Back</a>
+            <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+    </center>
+</body>
+</html>
